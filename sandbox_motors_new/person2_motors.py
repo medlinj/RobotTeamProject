@@ -10,12 +10,12 @@ Authors: David Fisher, David Mutchler and JD Medlin.
 #   Then repeat for the spin_right functions.
 
 
-
 import ev3dev.ev3 as ev3
 import time
 
 left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
 right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
 
 def test_spin_left_spin_right():
     """
@@ -32,9 +32,6 @@ def test_spin_left_spin_right():
       4. Same as #1, 2, 3, but tests the spin_right functions.
     """
     r1 = input('How long should the duration of movement be?')
-    while True:
-        if r1 == 0:
-            break
     r2 = input('How fast should motors move from -100 to 100?')
     r3 = input('How should motors stop? (brake, coast, hold)')
 
@@ -106,3 +103,5 @@ def spin_right_by_encoders(degrees, speed, stop_action):
 
 
 test_spin_left_spin_right()
+spin_left_seconds(10, 50, 'coast')
+spin_left_by_time(360, 50, 'coast')
