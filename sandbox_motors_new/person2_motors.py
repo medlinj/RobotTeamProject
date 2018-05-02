@@ -3,7 +3,7 @@ Functions for SPINNING the robot LEFT and RIGHT.
 Authors: David Fisher, David Mutchler and JD Medlin.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Implement spin_left_seconds, then the relevant part of the test function.
+# DONE: 2. Implement spin_left_seconds, then the relevant part of the test function.
 #          Test and correct as needed.
 #   Then repeat for spin_left_by_time.
 #   Then repeat for spin_left_by_encoders.
