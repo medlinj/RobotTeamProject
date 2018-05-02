@@ -115,7 +115,7 @@ def turn_left_by_time(degrees, speed, stop_action):
 
 def turn_left_by_encoders(degrees, speed, stop_action):
     left_motor = ev3cd.LargeMotor(ev3cd.OUTPUT_B)
-    left_motor.run_to_rel_pos(speed_sp=speed * 8, position_sp=degrees)
+    left_motor.run_to_rel_pos(speed_sp=speed * 8, position_sp=degrees*4)
     left_motor.wait_while(ev3cd.LargeMotor.STATE_RUNNING)
     left_motor.stop(stop_action=stop_action)
     """
@@ -145,7 +145,7 @@ def turn_right_by_time(degrees, speed, stop_action):
 def turn_right_by_encoders(degrees, speed, stop_action):
     degrees = degrees * 8
     left_motor = ev3cd.LargeMotor(ev3cd.OUTPUT_B)
-    left_motor.run_to_rel_pos(speed_sp=-speed * 8, position_sp=degrees)
+    left_motor.run_to_rel_pos(speed_sp=-speed * 8, position_sp=degrees*4)
     left_motor.wait_while(ev3cd.LargeMotor.STATE_RUNNING)
     left_motor.stop(stop_action=stop_action)
     """ Calls turn_left_by_encoders with negative speeds to achieve turn_right motion. """
