@@ -28,14 +28,13 @@ def test_forward_backward():
       4. Same as #1, 2, 3, but tests the BACKWARD functions.
     """
     while True:
-        time = input('Please give me a time to travel')
-        if time is 0:
+        sec = input('Please give me a time to travel  ')
+        if sec is 0:
             break
         else:
-            speed = input('Please give me a speed from -100 to 100')
-            stop = input('Do you want me to: break, coast, or hold')
+            speed = input('Please give me a speed from -100 to 100  ')
+            stop = input('Do you want me to: break, coast, or hold  ')
             forward_seconds(time, speed, stop)
-
 
 
 def forward_seconds(seconds, speed, stop_action):
@@ -45,7 +44,7 @@ def forward_seconds(seconds, speed, stop_action):
     Uses the given stop_action.
     """
 
-    ev3.Sound.speak("I'm sorry Bill, I'm afraid I can't do that").wait()
+    # fixed_speed = speed * 8
 
     # Connect two large motors on output ports B and C
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
@@ -55,13 +54,8 @@ def forward_seconds(seconds, speed, stop_action):
     assert left_motor.connected
     assert right_motor.connected
 
-    left_motor.run_forever(speed_sp=speed)
-    right_motor.run_forever(speed_sp=speed)
-    time.sleep(seconds)
-    left_motor.stop(stop_action=stop_action)
-    right_motor.stop(stop_action=stop_action)
-
-    ev3.Sound.speak("Daft world")
+    left_motor.run_timed(speed_sp=speed*8, time_sp=seconds, stop_action=stop_action)
+    right_motor.run_timed(speed_sp=speed*8, time_sp=seconds, stop_action=stop_action)
 
 def forward_by_time(inches, speed, stop_action):
     """
