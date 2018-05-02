@@ -48,13 +48,37 @@ def test_spin_left_spin_right():
     # r3 = input('How should motors stop? (brake, coast, hold)')
     # spin_left_by_time(r1, r2, r3)
 
+    # while True:
+    #     r1 = int(input('How many degrees?'))
+    #     if r1 != 0:
+    #         break
+    # r2 = int(input('How fast should motors move from -100 to 100?'))
+    # r3 = input('How should motors stop? (brake, coast, hold)')
+    # spin_left_by_encoders(r1, r2, r3)
+
+    # while True:
+    #     r1 = int(input('How long should the duration of movement be?'))
+    #     if r1 != 0:
+    #         break
+    # r2 = int(input('How fast should motors move from -100 to 100?'))
+    # r3 = input('How should motors stop? (brake, coast, hold)')
+    # spin_right_seconds(r1, r2, r3)
+
+    # while True:
+    #     r1 = int(input('How many degrees?'))
+    #     if r1 != 0:
+    #         break
+    # r2 = int(input('How fast should motors move from -100 to 100?'))
+    # r3 = input('How should motors stop? (brake, coast, hold)')
+    # spin_right_by_time(r1, r2, r3)
+
     while True:
         r1 = int(input('How many degrees?'))
         if r1 != 0:
             break
     r2 = int(input('How fast should motors move from -100 to 100?'))
     r3 = input('How should motors stop? (brake, coast, hold)')
-    spin_left_by_encoders(r1, r2, r3)
+    spin_right_by_encoders(r1, r2, r3)
 
 def spin_left_seconds(seconds, speed, stop_action):
     """
@@ -82,7 +106,7 @@ def spin_left_by_time(degrees, speed, stop_action):
       2. Sleep for the computed number of seconds.
       3. Stop moving.
     """
-    tiempo = degrees / 43
+    tiempo = degrees / 45
     left_motor.run_forever(speed_sp=(-8*speed))
     right_motor.run_forever(speed_sp=(8*speed))
 
@@ -100,11 +124,14 @@ def spin_left_by_encoders(degrees, speed, stop_action):
       1. Compute the number of degrees the wheels should spin to achieve the desired distance.
       2. Move until the computed number of degrees is reached.
     """
-    robot_degrees = degrees * 8
-    left_motor.run_to_rel_pos(position_sp=robot_degrees,speed_sp = speed*(-8))
+    robot_degrees = degrees * 5
 
-    right_motor.run_to_rel_pos(position_sp=robot_degrees, speed_sp=speed*8)
-
+    left_motor.speed_sp = speed*(8)
+    left_motor.run_to_rel_pos(position_sp=-robot_degrees)
+    right_motor.speed_sp = speed*8
+    right_motor.run_to_rel_pos(position_sp=robot_degrees)
+    right_motor.wait_while('running')
+    left_motor.wait_while('running')
     left_motor.stop(stop_action=stop_action)
     right_motor.stop(stop_action=stop_action)
 
@@ -112,8 +139,8 @@ def spin_left_by_encoders(degrees, speed, stop_action):
 def spin_right_seconds(seconds, speed, stop_action):
     """ Calls spin_left_seconds with negative speeds to achieve spin_right motion. """
 
-    left_motor.run_forever(speed_sp=(-8*speed))
-    right_motor.run_forever(speed_sp=(8*speed))
+    left_motor.run_forever(speed_sp=(8*speed))
+    right_motor.run_forever(speed_sp=(-8*speed))
 
     time.sleep(seconds)
 
@@ -124,9 +151,29 @@ def spin_right_seconds(seconds, speed, stop_action):
 def spin_right_by_time(degrees, speed, stop_action):
     """ Calls spin_left_by_time with negative speeds to achieve spin_right motion. """
 
+    tiempo = degrees / 43
+
+    left_motor.run_forever(speed_sp=-8*speed)
+    right_motor.run_forever(speed_sp=8*speed)
+
+    time.sleep(tiempo)
+
+    left_motor.stop(stop_action=stop_action)
+    right_motor.stop(stop_action=stop_action)
+
 
 def spin_right_by_encoders(degrees, speed, stop_action):
     """ Calls spin_left_by_encoders with negative speeds to achieve spin_right motion. """
 
+    robot_degrees = degrees * 5
+
+    left_motor.speed_sp = speed * 8
+    right_motor.speed_sp = speed * 8
+    left_motor.run_to_rel_pos(position_sp=robot_degrees)
+    right_motor.run_to_rel_pos(position_sp=-robot_degrees)
+    left_motor.wait_while('running')
+    right_motor.wait_while('running')
+    left_motor.stop(stop_action=stop_action)
+    right_motor.stop(stop_action=stop_action)
 
 test_spin_left_spin_right()
