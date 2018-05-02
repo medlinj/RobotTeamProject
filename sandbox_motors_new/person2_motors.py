@@ -31,46 +31,45 @@ def test_spin_left_spin_right():
       3. Same as #2, but runs spin_left_by_encoders.
       4. Same as #1, 2, 3, but tests the spin_right functions.
     """
-    # while True:
-    #     r1 = int(input('How long should the duration of movement be?'))
-    #     if r1 != 0:
-    #         break
-    # r2 = int(input('How fast should motors move from -100 to 100?'))
-    # r3 = input('How should motors stop? (brake, coast, hold)')
-    #
-    # spin_left_seconds(r1, r2, r3)
+    while True:
+        r1 = int(input('How long should the duration of movement be?'))
+        if r1 != 0:
+            break
+    r2 = int(input('How fast should motors move from -100 to 100?'))
+    r3 = input('How should motors stop? (brake, coast, hold)')
+    spin_left_seconds(r1, r2, r3)
 
-    # while True:
-    #     r1 = int(input('How many degrees?'))
-    #     if r1 != 0:
-    #         break
-    # r2 = int(input('How fast should motors move from -100 to 100?'))
-    # r3 = input('How should motors stop? (brake, coast, hold)')
-    # spin_left_by_time(r1, r2, r3)
+    while True:
+        r1 = int(input('How many degrees?'))
+        if r1 != 0:
+            break
+    r2 = int(input('How fast should motors move from -100 to 100?'))
+    r3 = input('How should motors stop? (brake, coast, hold)')
+    spin_left_by_time(r1, r2, r3)
 
-    # while True:
-    #     r1 = int(input('How many degrees?'))
-    #     if r1 != 0:
-    #         break
-    # r2 = int(input('How fast should motors move from -100 to 100?'))
-    # r3 = input('How should motors stop? (brake, coast, hold)')
-    # spin_left_by_encoders(r1, r2, r3)
+    while True:
+        r1 = int(input('How many degrees?'))
+        if r1 != 0:
+            break
+    r2 = int(input('How fast should motors move from -100 to 100?'))
+    r3 = input('How should motors stop? (brake, coast, hold)')
+    spin_left_by_encoders(r1, r2, r3)
 
-    # while True:
-    #     r1 = int(input('How long should the duration of movement be?'))
-    #     if r1 != 0:
-    #         break
-    # r2 = int(input('How fast should motors move from -100 to 100?'))
-    # r3 = input('How should motors stop? (brake, coast, hold)')
-    # spin_right_seconds(r1, r2, r3)
+    while True:
+        r1 = int(input('How long should the duration of movement be?'))
+        if r1 != 0:
+            break
+    r2 = int(input('How fast should motors move from -100 to 100?'))
+    r3 = input('How should motors stop? (brake, coast, hold)')
+    spin_right_seconds(r1, r2, r3)
 
-    # while True:
-    #     r1 = int(input('How many degrees?'))
-    #     if r1 != 0:
-    #         break
-    # r2 = int(input('How fast should motors move from -100 to 100?'))
-    # r3 = input('How should motors stop? (brake, coast, hold)')
-    # spin_right_by_time(r1, r2, r3)
+    while True:
+        r1 = int(input('How many degrees?'))
+        if r1 != 0:
+            break
+    r2 = int(input('How fast should motors move from -100 to 100?'))
+    r3 = input('How should motors stop? (brake, coast, hold)')
+    spin_right_by_time(r1, r2, r3)
 
     while True:
         r1 = int(input('How many degrees?'))
