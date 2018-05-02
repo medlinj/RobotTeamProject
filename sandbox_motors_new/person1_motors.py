@@ -27,6 +27,15 @@ def test_forward_backward():
       3. Same as #2, but runs forward_by_encoders.
       4. Same as #1, 2, 3, but tests the BACKWARD functions.
     """
+    while True:
+        time = input('Please give me a time to travel')
+        if time is 0:
+            break
+        else:
+            speed = input('Please give me a speed from -100 to 100')
+            stop = input('Do you want me to: break, coast, or hold')
+            forward_seconds(time, speed, stop)
+
 
 
 def forward_seconds(seconds, speed, stop_action):
@@ -89,7 +98,7 @@ def forward_by_encoders(inches, speed, stop_action):
     assert right_motor.connected
 
     left_motor.run_to_abs_pos(position_sp = degrees, speed_sp = speed, stop_action = stop_action)
-
+    globals()
 
 def backward_seconds(seconds, speed, stop_action):
     """ Calls forward_seconds with negative speeds to achieve backward motion. """
