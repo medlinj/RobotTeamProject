@@ -217,9 +217,36 @@ def run_test_show_images():
     print('Look at the TESTING CODE to see the names of the files')
     print('that contain the IMAGES that you saw.')
     print()
+def wait_for_release():
+    """
+    Constructs an ev3.TouchSensor object.
+    Then repeatedly:
+       1. Gets the STATE of the touch sensor
+            and leaves the loop if that state is 1
+            (i.e., when the touch sensor is pressed).
+       2. Sleeps for a small amount (say, 0.05 seconds).
+    """
+    # -------------------------------------------------------------------------
+    # DONE: 4.  Implement and test this function.
+    #           Tests have been written for you (above).
+    # -------------------------------------------------------------------------
+    touch = ev3.TouchSensor(ev3.INPUT_3)
 
+    while True:
+        if touch.is_pressed is 0:
+            break
+        time.sleep(0.05)
 
 def show_images(list_of_images):
+    screen = ev3.Screen
+    sensor1 = ev3.TouchSensor()
+    for k in range(len(list_of_images)):
+        print("press touch sensor goddamnit")
+        wait_for_press()
+        wait_for_release()
+        print("look at that badass immage")
+
+
     """
     Constructs an ev3.Screen object and an ev3.TouchSensor object.
     Then, for each image in the given list of images:
