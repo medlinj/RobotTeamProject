@@ -7,11 +7,11 @@ Person 1: ev3.TouchSensor
 Person 2: ev3.Button
 Person 3: ev3.RemoteControl
 
-Authors: David Fisher, David Mutchler and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher, David Mutchler and Joe Krisciunas
+"""  # Done
 
 # -----------------------------------------------------------------------------
-# TODO: 2.  WITH YOUR INSTRUCTOR, discuss the "big picture" of this project,
+# Done
 #           as described in the   _README_FIRST.txt   file.
 #
 # When your   ** ENTIRE TEAM ** understands that:
@@ -33,8 +33,8 @@ def main():
     """ Calls the   TEST   functions in this module. """
     # Uncomment these tests as you proceed through this module.
 
-    # run_test_buttons_on_ir_beacon()
-    # run_test_wait_for_press_on_ir_beacon_button()
+    #run_test_buttons_on_ir_beacon()
+    run_test_wait_for_press_on_ir_beacon_button()
     # run_test_make_sounds()
 
 
@@ -110,6 +110,11 @@ def run_test_buttons_on_ir_beacon():
 
 
 def print_state_of_blue_up_button_on_ir_beacon(n, seconds_per_print):
+    remote1 = ev3.RemoteControl(channel=1)
+    for k in range(n):
+        print(remote1.blue_up)
+        time.sleep(seconds_per_print)
+
     """
     Constructs an ev3.RemoteControl object for channel 1.
     Then does the following  n  times (where n is the first argument):
@@ -117,7 +122,7 @@ def print_state_of_blue_up_button_on_ir_beacon(n, seconds_per_print):
        2. SLEEPs for the given number of seconds.
     """
     # -------------------------------------------------------------------------
-    # TODO: 3.  Implement and test this function.
+    # Done
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
 
@@ -174,6 +179,14 @@ def run_test_wait_for_press_on_ir_beacon_button():
 
 
 def wait_for_RED_DOWN_button_press():
+    remote1 = ev3.RemoteControl(channel=1)
+    while True:
+        print(remote1.red_down)
+        time.sleep(0.05)
+        if remote1.red_down == True:
+            break
+
+
     """
     Constructs an ev3.RemoteControl object for channel 2.
     Then repeatedly:
@@ -183,7 +196,7 @@ def wait_for_RED_DOWN_button_press():
        2. Sleeps for a small amount (say, 0.05 seconds).
     """
     # -------------------------------------------------------------------------
-    # TODO: 4.  Implement and test this function.
+    # Done
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
 
