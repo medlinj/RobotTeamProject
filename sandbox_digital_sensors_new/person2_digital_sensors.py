@@ -7,23 +7,24 @@ Person 1: ev3.TouchSensor
 Person 2: ev3.Button
 Person 3: ev3.RemoteControl
 
-Authors: David Fisher, David Mutchler and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher, David Mutchler and JD Medlin.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # -----------------------------------------------------------------------------
-# TODO: 2.  WITH YOUR INSTRUCTOR, discuss the "big picture" of this project,
+# DONE: 2.  WITH YOUR INSTRUCTOR, discuss the "big picture" of this project,
 #           as described in the   _README_FIRST.txt   file.
 #
 # When your   ** ENTIRE TEAM ** understands that:
 #
 #      -- Each of you works in your own "person" file.
-#      -- Each of you has different tasks.
+#      -- Each of you has different taC$$Esks.
 #      -- The tasks that each of you do are ALMOST EXACTLY THE SAME.
 #           - So, HELP EACH OTHER!
 #           - As you finish each TO-DO, check that your teammates are doing OK!
 #
 # change this TO-DO to DONE.
 # -----------------------------------------------------------------------------
+
 
 import ev3dev.ev3 as ev3
 import time
@@ -33,8 +34,8 @@ def main():
     """ Calls the   TEST   functions in this module. """
     # Uncomment these tests as you proceed through this module.
 
-    # run_test_buttons_on_brick()
-    # run_test_wait_for_press_on_brick_button()
+    run_test_buttons_on_brick()
+    run_test_wait_for_press_on_brick_button()
     # run_test_show_leds()
 
 
@@ -116,9 +117,14 @@ def print_state_of_left_button_on_brick(n, seconds_per_print):
        2. SLEEPs for the given number of seconds.
     """
     # -------------------------------------------------------------------------
-    # TODO: 3.  Implement and test this function.
+    # DONE: 3.  Implement and test this function.
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
+
+    button1 = ev3.Button()
+    for k in range(n):
+        print(button1.left)
+        time.sleep(seconds_per_print)
 
 
 def run_test_wait_for_press_on_brick_button():
@@ -176,9 +182,16 @@ def wait_for_up_button_press():
        2. Sleeps for a small amount (say, 0.05 seconds).
     """
     # -------------------------------------------------------------------------
-    # TODO: 4.  Implement and test this function.
+    # DONE: 4.  Implement and test this function.
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
+
+    button = ev3.Button()
+
+    while True:
+        if button.up == True:
+            break
+        time.sleep(.05)
 
 
 def run_test_show_leds():
