@@ -37,6 +37,7 @@ def main():
     # run_test_touch_sensor()
     # run_test_wait_for_press()
     # run_test_show_images()
+    press_for_yodel()
 
 
 def run_test_touch_sensor():
@@ -232,6 +233,15 @@ def show_images(list_of_images):
     Type hints:
       :type list_of_images: []
     """
+
+
+def press_for_yodel():
+    wait_for_press()
+    yodel()
+
+
+def yodel():
+    ev3.Sound.play("C:\Users\kuebeltm\PycharmProjects\RobotTeamProject\assets\sounds\Walmart yodeling kid-bOZT-UpRA2Y.wav")
 
 
 # -----------------------------------------------------------------------------
