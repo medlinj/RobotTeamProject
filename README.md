@@ -18,7 +18,7 @@ discussed in the **Background information** section below. Once all the [setup](
   - [Starting code (link to a specific folder in this repository)](https://github.com/Rosebotics/ev3dev-curriculum/tree/master/sandbox/src/motors)
   - [Checkoff sheet](https://drive.google.com/open?id=14_BQghdiRCOzJ5V_edXhcmaZFhH1qzkzL2u50uH6_o0)
 
-  ### Digital Inputs (and a few other things)
+  ### Digital Inputs (and a few other things)dcr
   Learn about the EV3 buttons, IR remote, and touch sensor (the digital inputs) plus a few other things.
   - [Lecture slides](https://drive.google.com/open?id=1mUxsC-cUO4S5bwhTAQG0G10IO0gsbAU5YEORxeh0mMc)
   - [Starting code (link to a specific folder in this repository)](https://github.com/Rosebotics/ev3dev-curriculum/tree/master/sandbox/src/digital_inputs)
