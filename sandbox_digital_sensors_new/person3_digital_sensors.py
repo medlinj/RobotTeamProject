@@ -34,8 +34,8 @@ def main():
     # Uncomment these tests as you proceed through this module.
 
     #run_test_buttons_on_ir_beacon()
-    run_test_wait_for_press_on_ir_beacon_button()
-    # run_test_make_sounds()
+    #run_test_wait_for_press_on_ir_beacon_button()
+    run_test_make_sounds()
 
 
 def run_test_buttons_on_ir_beacon():
@@ -212,9 +212,24 @@ def run_test_make_sounds():
     print('  ** CHANGE the channel to 3. **')
     print('Then press the IR Beacon buttons to make sounds.')
     print()
+    make_sounds()
 
 
 def make_sounds():
+    remote2 = ev3.RemoteControl(channel=2)
+
+    while True:
+        if remote2.red_up ==True:
+            ev3.Sound.beep().wait(1)
+        if remote2.red_down == True:
+            ev3.Sound.speak('Mark Zuckerberg should be arrested for crimes against the american people').wait(1)
+        if remote2.blue_up ==True:
+            ev3.Sound.play('/home/robot/csse120/assets/sounds/awesome_pcm.wav').wait(1)
+        if remote2.blue_down == True:
+            break
+
+
+
     """
     Constructs an ev3.RemoteControl object for channel 2.
     Then, repeatedly make the IR Beacon buttons behave as follows:
