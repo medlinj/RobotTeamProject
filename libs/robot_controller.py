@@ -59,7 +59,7 @@ class Snatch3r(object):
         left_motor.wait_while(ev3.LargeMotor.STATE_RUNNING)
         left_motor.stop(stop_action=stop_action)
 
-    def spin_left_by_encoders(self,degrees, speed, stop_action):
+    def spin_left(self,degrees, speed, stop_action):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         robot_degrees = degrees * 4.2
@@ -73,7 +73,7 @@ class Snatch3r(object):
         left_motor.stop(stop_action=stop_action)
         right_motor.stop(stop_action=stop_action)
 
-    def spin_right_by_encoders(self, degrees, speed, stop_action):
+    def spin_right(self, degrees, speed, stop_action):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         robot_degrees = degrees * 4.2
