@@ -34,9 +34,9 @@ def main():
     """ Calls the   TEST   functions in this module. """
     # Uncomment these tests as you proceed through this module.
 
-    run_test_buttons_on_brick()
-    run_test_wait_for_press_on_brick_button()
-    # run_test_show_leds()
+    # run_test_buttons_on_brick()
+    # run_test_wait_for_press_on_brick_button()
+    run_test_show_leds()
 
 
 def run_test_buttons_on_brick():
@@ -206,6 +206,7 @@ def run_test_show_leds():
           + ' on the BRICK to change LED states.')
     print()
 
+    show_leds()
 
 def show_leds():
     """
@@ -218,7 +219,15 @@ def show_leds():
        -- DOWN button:  Both LEDs turn off (i.e., to BLACK).
        -- BACKSPACE button: The program breaks out of the loop.
     """
+    list = [ev3.Leds.RED, ev3.Leds.YELLOW, ev3.Leds.GREEN, ev3.Leds.AMBER, ev3.Leds.BLACK]
+    list2 = [ev3.Leds.BLACK, ev3.Leds.GREEN, ev3.Leds.YELLOW, ev3.Leds.GREEN, ev3.Leds.RED]
+    button = ev3.Button()
 
+    for j in range(5):
+        for k in range(len(list)):
+            ev3.Leds.set_color(ev3.Leds.LEFT, list[k])
+            ev3.Leds.set_color(ev3.Leds.RIGHT, list2[k])
+            time.sleep(.25)
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
