@@ -48,10 +48,10 @@ class Snatch3r(object):
             self.right_motor.wait_while("running")
 
     def turn_left(self,degrees, speed, stop_action='brake'):
-        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        left_motor.run_to_rel_pos(speed_sp=speed * 8, position_sp=degrees * 4.2)
-        left_motor.wait_while(ev3.LargeMotor.STATE_RUNNING)
-        left_motor.stop(stop_action=stop_action)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        right_motor.run_to_rel_pos(speed_sp=speed * 8, position_sp=degrees * 4.2)
+        right_motor.wait_while(ev3.LargeMotor.STATE_RUNNING)
+        right_motor.stop(stop_action=stop_action)
 
     def turn_right(self, degrees, speed, stop_action='brake'):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
