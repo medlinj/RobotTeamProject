@@ -60,4 +60,3 @@ class Snatch3r(object):
         left_motor.stop(stop_action=stop_action)
 
 
-    
