@@ -23,7 +23,7 @@ class Snatch3r(object):
     # (and delete these comments)
 
     def __init__(self):
-        self.left_motor= ev3.LargeMotor(ev3.OUTPUT_B)
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
         assert self.left_motor.connected
@@ -58,5 +58,34 @@ class Snatch3r(object):
         left_motor.run_to_rel_pos(speed_sp=speed * -8, position_sp=degrees * -4.2)
         left_motor.wait_while(ev3.LargeMotor.STATE_RUNNING)
         left_motor.stop(stop_action=stop_action)
+
+    def spin_left_by_encoders(self,degrees, speed, stop_action):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        robot_degrees = degrees * 4.2
+
+        left_motor.speed_sp = speed * (8)
+        left_motor.run_to_rel_pos(position_sp=-robot_degrees)
+        right_motor.speed_sp = speed * 8
+        right_motor.run_to_rel_pos(position_sp=robot_degrees)
+        right_motor.wait_while('running')
+        left_motor.wait_while('running')
+        left_motor.stop(stop_action=stop_action)
+        right_motor.stop(stop_action=stop_action)
+
+    def spin_right_by_encoders(self, degrees, speed, stop_action):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        robot_degrees = degrees * 4.2
+
+        left_motor.speed_sp = speed * 8
+        right_motor.speed_sp = speed * 8
+        left_motor.run_to_rel_pos(position_sp=robot_degrees)
+        right_motor.run_to_rel_pos(position_sp=-robot_degrees)
+        left_motor.wait_while('running')
+        right_motor.wait_while('running')
+        left_motor.stop(stop_action=stop_action)
+        right_motor.stop(stop_action=stop_action)
+
 
 
