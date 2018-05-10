@@ -50,3 +50,25 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
 #
 # Observations you should make, using run_to_rel_pos is useful for accurate turns, but testing takes time.
+import ev3dev.ev3 as ev3
+import robot_controller as robo
+
+ev3.Sound.speak("Drive inches").wait()
+robot = robo.Snatch3r()
+
+while True:
+    degrees = int(input("Degrees: "))
+    if degrees == 0:
+        break
+    speed = int(input("Speed: "))
+    if speed == 0:
+        break
+    stop_action = input("Stop Action: ")
+    if stop_action == 0:
+        break
+
+    robot.turn_left(degrees, speed, stop_action)
+    ev3.Sound.beep().wait()  # Fun little beep
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
