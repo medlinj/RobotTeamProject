@@ -87,5 +87,14 @@ class Snatch3r(object):
         left_motor.stop(stop_action=stop_action)
         right_motor.stop(stop_action=stop_action)
 
+    def loop_forever(self):
+        self.running = True
+        while self.running:
+            time.sleep(0.1)
+    def shutdown(self):
+        self.running = False
+
+
+
 
 
