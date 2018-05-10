@@ -32,7 +32,7 @@ communication.  Summary of the communication:
 Implement the TODOs below to complete this module, then transfer the file to the EV3 (as done in many previous units),
   then run this module on the EV3 while at the same time, running m3_pc_led_button_communication.py on your PC.
 
-Authors: David Fisher and JD Medlin.
+Authors: David Fisher and JDMedlin.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 
