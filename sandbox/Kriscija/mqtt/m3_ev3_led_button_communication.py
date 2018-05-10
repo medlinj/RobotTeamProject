@@ -105,15 +105,15 @@ def main():
     # Once you have that done connect the mqtt_client to the MQTT broker using the connect_to_pc method.
     # Note: on EV3 you call connect_to_pc, but in the PC code it will call connect_to_ev3
     my_delegate = MyDelegate()
-    mqtt = com.MqttClient(delegate)
+    mqtt = com.MqttClient(my_delegate)
     mqtt.connect_to_pc()
 
     # Buttons on EV3 (these obviously assume TO DO: 3. is done)
     btn = ev3.Button()
-    btn.on_up = lambda state: handle_button_press(state, mqtt_client, "Up")
-    btn.on_down = lambda state: handle_button_press(state, mqtt_client, "Down")
-    btn.on_left = lambda state: handle_button_press(state, mqtt_client, "Left")
-    btn.on_right = lambda state: handle_button_press(state, mqtt_client, "Right")
+    btn.on_up = lambda state: handle_button_press(state, mqtt, "Up")
+    btn.on_down = lambda state: handle_button_press(state, mqtt, "Down")
+    btn.on_left = lambda state: handle_button_press(state, mqtt, "Left")
+    btn.on_right = lambda state: handle_button_press(state, mqtt, "Right")
     btn.on_backspace = lambda state: handle_shutdown(state, my_delegate)
 
     while my_delegate.running:
