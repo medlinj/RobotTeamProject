@@ -74,6 +74,8 @@ def main():
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
+    stop_button['command'] = lambda: stopper(mqtt_client)
+    root.bind('<space>', lambda event: stopper(mqtt_client))
     # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
 
     right_button = ttk.Button(main_frame, text="Right")
@@ -152,6 +154,11 @@ def send_backward(mqtt_client, inches, speed):
     mqtt_client.send_message("backward", [inches, speed, 'brake'])
 
 
+def stopper(mqtt_client):
+    print("Robot is stopping")
+    mqtt_client.send_message("stop")
+
+
 # Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
@@ -159,6 +166,8 @@ def quit_program(mqtt_client, shutdown_ev3):
         mqtt_client.send_message("shutdown")
     mqtt_client.close()
     exit()
+
+
 
 
 # ----------------------------------------------------------------------
