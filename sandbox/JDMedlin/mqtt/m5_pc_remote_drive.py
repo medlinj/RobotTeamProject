@@ -27,7 +27,6 @@ Authors: David Fisher and JD Medlin.
 
 import tkinter
 from tkinter import ttk
-
 import mqtt_remote_method_calls as com
 
 
@@ -68,10 +67,14 @@ def main():
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
+    left_button['command'] = lambda: send_left(mqtt_client, left_speed_entry, right_speed_entry)
+    root.bind('<Up>', lambda event: send_left(mqtt_client, left_speed_entry, right_speed_entry))
     # left_button and '<Left>' key
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
+    left_button['command'] = lambda: send_stop(mqtt_client, left_speed_entry, right_speed_entry)
+    root.bind('<Up>', lambda event: send_stop(mqtt_client, left_speed_entry, right_speed_entry))
     # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
 
     right_button = ttk.Button(main_frame, text="Right")
@@ -104,12 +107,33 @@ def main():
     root.mainloop()
 
 def send_forward(mqtt_client, left_speed_entry, right_speed_entry):
-    
+    l = int(left_speed_entry.get())
+    r = int(right_speed_entry.get())
+    print("left_motor = {}  right_motor = {}".format(l, r))
+    mqtt_client.send_message("forward", [l, r])
 
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
 # TODO: 4. Implement the functions for the drive button callbacks.
+def send_left(mqtt_client, left_speed_entry, right_speed_entry):
+    l = int(left_speed_entry.get())
+    r = int(right_speed_entry.get())
+    print("left_motor = {}  right_motor = {}".format(l, r))
+    mqtt_client.send_message("left", [-l, r])
+
+def send_right(mqtt_client, left_speed_entry, right_speed_entry):
+    l = int(left_speed_entry.get())
+    r = int(right_speed_entry.get())
+    print("left_motor = {}  right_motor = {}".format(l, r))
+    mqtt_client.send_message("right", [l, -r])
+
+def send_stop(mqtt_client, left_speed_entry, right_speed_entry):
+    l = int(left_speed_entry.get())
+    r = int(right_speed_entry.get())
+    print("left_motor = {}  right_motor = {}".format(l, r))
+    mqtt_client.send_message("stop", [l, r])
+
 
 # TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
 #
