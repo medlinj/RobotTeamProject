@@ -88,6 +88,11 @@ class Snatch3r(object):
         right_motor.wait_while('running')
         left_motor.stop(stop_action=stop_action)
         right_motor.stop(stop_action=stop_action)
+    def stop(self):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        left_motor.stop(stop_action='brake')
+        right_motor.stop(stop_action='brake')
 
     def loop_forever(self):
         self.running = True
@@ -95,8 +100,9 @@ class Snatch3r(object):
             time.sleep(0.1)
     def shutdown(self):
         self.running = False
+        self.stop()
 
-
+    def arm_up
 
 
 
