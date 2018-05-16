@@ -2,7 +2,6 @@ import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
 
-
 def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
@@ -48,19 +47,20 @@ def main():
     shake_button['command'] = lambda: shake(mqtt_client)
     root.bind('<q>', lambda event: shake(mqtt_client))
 
-    stay_button = ttk.Button(main_frame, text='Stay')
-    stay_button.grid(row=6, column=0)
-    stay_button['command'] = lambda: stay(mqtt_client)
-    root.bind('<r>', lambda event: stay(mqtt_client))
-
     quit_button = ttk.Button(main_frame, text='Nap (Quit)')
     quit_button.grid(row=6, column= 2)
     quit_button['command'] = lambda: nap_time(mqtt_client)
     root.bind('<p>', lambda event: nap_time(mqtt_client))
 
+    bark_button = ttk.Button(main_frame, text='Bark')
+    bark_button.grid(row=4, column=0)
+    bark_button['command'] = lambda: bark(mqtt_client)
+    root.bind('<e>', lambda event: bark(mqtt_client))
+
     root.mainloop()
 
 #     Functions below
+
 
 def send_walk(mqtt_client, left_speed_entry, right_speed_entry):
     l = int(left_speed_entry.get())
@@ -68,21 +68,26 @@ def send_walk(mqtt_client, left_speed_entry, right_speed_entry):
     print('time for a walk!')
     mqtt_client.send_message('walk', [l, r])
 
+
 def stay(mqtt_client):
     print('stay!')
     mqtt_client.send_message('stay')
+
 
 def wag_tail(mqtt_client):
     print('happy doggy!!!')
     mqtt_client.send_message('wag_tail')
 
+
 def shake(mqtt_client):
     print('shake')
     mqtt_client.send_message('shake')
 
+
 def bark(mqtt_client):
-    print('woof woof bark bark')
+    print('bark, bark, woof, woof')
     mqtt_client.send_message('bark')
+
 
 def nap_time(mqtt_client):
     print('nap time!')
@@ -91,6 +96,4 @@ def nap_time(mqtt_client):
     exit()
 
 
-
 main()
-
