@@ -80,7 +80,7 @@ class Snatch3r(object):
         robot_degrees = degrees * 4.2
 
         left_motor.speed_sp = speed * 8
-        right_motor.speed_sp = speed * 8
+        right_motor.speed_sp = speed *8
         left_motor.run_to_rel_pos(position_sp=robot_degrees)
         right_motor.run_to_rel_pos(position_sp=-robot_degrees)
         left_motor.wait_while('running')
