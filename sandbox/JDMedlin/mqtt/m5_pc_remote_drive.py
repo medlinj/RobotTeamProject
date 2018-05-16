@@ -135,7 +135,7 @@ def send_right(mqtt_client, left_speed_entry, right_speed_entry):
     l = int(left_speed_entry.get())
     r = int(right_speed_entry.get())
     print('right')
-    mqtt_client.send_message("move", [l, r])
+    mqtt_client.send_message("move", [l, -r])
 
 
 def send_back(mqtt_client, left_speed_entry, right_speed_entry):
