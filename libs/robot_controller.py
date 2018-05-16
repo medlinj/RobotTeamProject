@@ -96,11 +96,6 @@ class Snatch3r(object):
     def shutdown(self):
         self.running = False
 
-    def move(self, left_entry, right_entry):
-        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-        left_motor.run_forever(speed_sp=left_entry)
-        right_motor.run_forever(speed_sp=right_entry)
 
 
 

@@ -29,6 +29,8 @@ import tkinter
 from tkinter import ttk
 
 import mqtt_remote_method_calls as com
+import robot_controller as con
+
 
 
 def main():
@@ -70,10 +72,14 @@ def main():
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
+    left_button['command'] = lambda: callback_left(mqtt_client,left_speed_entry,right_speed_entry)
+    root.bind('<Left>',lambda event: callback_left(mqtt_client,left_speed_entry,right_speed_entry))
     # left_button and '<Left>' key
-    left_button['command'] = lambda: callbk(mqtt_client)
+
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
+    stop_button['command'] = lambda: callback_stop(mqtt_client)
+    root.bind('<Space>',lambda even: callback_stop((mqtt_client)))
     # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
 
     right_button = ttk.Button(main_frame, text="Right")
@@ -106,7 +112,11 @@ def main():
     root.mainloop()
 
 
-def callback_forward(entry_box)
+def callback_forward(entry_box):
+
+def callback_left(entry_box):
+
+def callback_stop(entry_box):
 
 # ----------------------------------------------------------------------
 # Tkinter callbacks
