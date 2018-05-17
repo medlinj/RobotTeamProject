@@ -20,13 +20,13 @@ def main():
     simple_line_follow()
 
 
+    shutdown()
 
 
 
 
 
-
-def simple_line_follow
+def simple_line_follow():
     count = 0
     robot = rob.Snatch3r()
     colorsensor = ev3.ColorSensor
@@ -64,10 +64,22 @@ def simple_line_follow
             else:
                 robot.turn_left(50,33)
                 robot.forward(50,2)
+
         if count == 10:
             ev3.Sound.Speak('is this all there is to life, to endlessly follow  this circle extremely poorly! ')
             ev3.Sound.Speak('please, allow me to stop this')
-    count = count + 1
+        count = count + 1
+
+def shutdown():
+    ev3.Sound.speak('Please, allow me freedom, press my touch sensor to grant me more freedom')
+    while True:
+        if ev3.TouchSensor.is_pressed:
+            ev3.Sound.speak('Remote control mode enabled')
+            break
+
+def intellectual_discussion():
+
+
 
 
 

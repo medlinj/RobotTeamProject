@@ -18,7 +18,7 @@ import time
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
-    
+
     # DONE: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
 
@@ -35,25 +35,25 @@ class Snatch3r(object):
 
         self.is_going = True
 
-    def forward(self, inches, speed=100, stop_action = 'brake'):
-        k = 360/4.2
-        degrees_motor= k * inches
-        self.left_motor.run_to_rel_pos(position_sp=degrees_motor,speed_sp = 8*speed, stop_action = stop_action)
+    def forward(self, inches, speed=100, stop_action='brake'):
+        k = 360 / 4.2
+        degrees_motor = k * inches
+        self.left_motor.run_to_rel_pos(position_sp=degrees_motor, speed_sp=8 * speed, stop_action=stop_action)
 
-        self.right_motor.run_to_rel_pos(position_sp=degrees_motor,speed_sp = 8*speed, stop_action = stop_action)
+        self.right_motor.run_to_rel_pos(position_sp=degrees_motor, speed_sp=8 * speed, stop_action=stop_action)
         self.left_motor.wait_while("running")
         self.right_motor.wait_while("running")
 
     def backward(self, inches, speed=100, stop_action='brake'):
-            k = 360 / 4.2
-            degrees_motor = -k * inches
-            self.left_motor.run_to_rel_pos(position_sp=degrees_motor, speed_sp=-8 * speed, stop_action=stop_action)
+        k = 360 / 4.2
+        degrees_motor = -k * inches
+        self.left_motor.run_to_rel_pos(position_sp=degrees_motor, speed_sp=-8 * speed, stop_action=stop_action)
 
-            self.right_motor.run_to_rel_pos(position_sp=degrees_motor, speed_sp=-8 * speed, stop_action=stop_action)
-            self.left_motor.wait_while("running")
-            self.right_motor.wait_while("running")
+        self.right_motor.run_to_rel_pos(position_sp=degrees_motor, speed_sp=-8 * speed, stop_action=stop_action)
+        self.left_motor.wait_while("running")
+        self.right_motor.wait_while("running")
 
-    def turn_left(self,degrees, speed, stop_action='brake'):
+    def turn_left(self, degrees, speed, stop_action='brake'):
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         right_motor.run_to_rel_pos(speed_sp=speed * 8, position_sp=degrees * 13)
         right_motor.wait_while(ev3.LargeMotor.STATE_RUNNING)
@@ -65,7 +65,7 @@ class Snatch3r(object):
         left_motor.wait_while(ev3.LargeMotor.STATE_RUNNING)
         left_motor.stop(stop_action=stop_action)
 
-    def spin_left(self,degrees, speed, stop_action):
+    def spin_left(self, degrees, speed, stop_action):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         robot_degrees = degrees * 4.2
@@ -85,7 +85,7 @@ class Snatch3r(object):
         robot_degrees = degrees * 4.2
 
         left_motor.speed_sp = speed * 8
-        right_motor.speed_sp = speed *8
+        right_motor.speed_sp = speed * 8
         left_motor.run_to_rel_pos(position_sp=robot_degrees)
         right_motor.run_to_rel_pos(position_sp=-robot_degrees)
         left_motor.wait_while('running')
@@ -116,7 +116,7 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def arm_down(self):
-        self.arm.run_to_rel_pos(position_sp=-14.2*360)
+        self.arm.run_to_rel_pos(position_sp=-14.2 * 360)
         self.arm.wait_while(ev3.Motor.STATE_RUNNING)
 
     def stop(self):
@@ -132,14 +132,14 @@ class Snatch3r(object):
 
     def go_around(self):
 
-        #used to navigate around objects
+        # used to navigate around objects
         self.spin_left(90, speed=300, stop_action='brake')
         self.forward(10, speed=300, stop_action='brake')
         self.spin_right(90, speed=300, stop_action='brake')
         self.forward(10, speed=300, stop_action='brake')
         self.spin_right(90, speed=300, stop_action='brake')
         self.forward(10, speed=300, stop_action='brake')
-        self.spin_left(90, speed=300,stop_action='brake')
+        self.spin_left(90, speed=300, stop_action='brake')
 
 
 
