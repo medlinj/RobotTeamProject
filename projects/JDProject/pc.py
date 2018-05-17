@@ -24,6 +24,12 @@ def main():
     right_speed_entry.insert(0, "600")
     right_speed_entry.grid(row=1, column=2)
 
+    color_label = ttk.Label(main_frame, text="Color Code")
+    color_label.grid(row=0, column=1)
+    color_entry = ttk.Entry(main_frame, width=8, justify=tkinter.RIGHT)
+    color_entry.insert(0, "600")
+    color_entry.grid(row=1, column=2)
+
     # Buttons below
 
     forward_button = ttk.Button(main_frame, text="Walk")
@@ -59,12 +65,17 @@ def main():
     test_button = ttk.Button(main_frame, text='cam')
     test_button.grid(row=4, column=1)
     test_button['command'] = lambda: testing(mqtt_client)
-    root.bind('<e>', lambda event: testing(mqtt_client))
+    root.bind('<t>', lambda event: testing(mqtt_client))
 
-    colors_button = ttk.Button(main_frame, text='colors')
+    colors_button = ttk.Button(main_frame, text='sniff')
     colors_button.grid(row=6, column=1)
-    colors_button['command'] = lambda: color_sensor_color(mqtt_client)
-    root.bind('<e>', lambda event: color_sensor_color(mqtt_client))
+    colors_button['command'] = lambda: sniff(mqtt_client)
+    root.bind('<u>', lambda event: sniff(mqtt_client))
+
+    parade_button = ttk.Button(main_frame, text='light parade')
+    parade_button.grid(row=5, column=2)
+    parade_button['command'] = lambda: pet_parade(mqtt_client)
+    root.bind('<l>', lambda event: pet_parade(mqtt_client))
 
     root.mainloop()
 
@@ -104,13 +115,20 @@ def nap_time(mqtt_client):
     mqtt_client.close()
     exit()
 
+
 def testing(mqtt_client):
     print('testing')
     mqtt_client.send_message('testing')
 
-def color_sensor_color(mqtt_client):
-    print('colors')
-    mqtt_client.send_message('color_sensor_color')
+
+def sniff(mqtt_client):
+    print('sniff')
+    mqtt_client.send_message('sniff')
+
+
+def pet_parade(mqtt_client):
+    print('light show!')
+    mqtt_client.send_message('pet_parade')
 
 
 main()
