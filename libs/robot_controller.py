@@ -119,5 +119,3 @@ class Snatch3r(object):
         self.right_motor.stop(stop_action='brake')
         self.arm.stop(stop_action='brake')
 
-
-
