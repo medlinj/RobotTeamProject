@@ -36,9 +36,10 @@ def main():
         #   assert self.pixy
         # Then here you can use a command like width = robot.pixy.value(3)
 
+        pixy = ev3.Sensor(driver_name="pixy-lego")
+        pixy.mode = "SIG1"
 
 
-        time.sleep(0.1)
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()

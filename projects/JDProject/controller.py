@@ -39,19 +39,20 @@ class RobotDelegate(object):
             self.head.wait_while(ev3.Motor.STATE_RUNNING)
             self.head.run_to_rel_pos(position_sp=-360, speed_sp=800)
             self.head.wait_while(ev3.Motor.STATE_RUNNING)
+        self.head_down()
 
     def wag_tail(self):
         for k in range(10):
             if k % 2 == 0:
-                self.right_paw.run_forever(speed_sp=-600)
-                self.left_paw.run_forever(speed_sp=600)
-                time.sleep(0.75)
+                self.right_paw.run_forever(speed_sp=-800)
+                self.left_paw.run_forever(speed_sp=800)
+                time.sleep(0.15)
                 self.right_paw.stop(stop_action='brake')
                 self.left_paw.stop(stop_action='brake')
             else:
-                self.right_paw.run_forever(speed_sp=600)
-                self.left_paw.run_forever(speed_sp=-600)
-                time.sleep(0.75)
+                self.right_paw.run_forever(speed_sp=800)
+                self.left_paw.run_forever(speed_sp=-800)
+                time.sleep(0.15)
                 self.right_paw.stop(stop_action='brake')
                 self.left_paw.stop(stop_action='brake')
 
@@ -89,4 +90,36 @@ class RobotDelegate(object):
     #         mqtt_client.send_message("shutdown")
     #     mqtt_client.close()
     #     exit()
+
+    def color_sensor_color(self):
+        """ Example of detecting color with the color sensor. """
+
+        # Potential values of the color_sensor.color property
+        #   ev3.ColorSensor.COLOR_NOCOLOR is the value 0
+        #   ev3.ColorSensor.COLOR_BLACK   is the value 1
+        #   ev3.ColorSensor.COLOR_BLUE    is the value 2
+        #   ev3.ColorSensor.COLOR_GREEN   is the value 3
+        #   ev3.ColorSensor.COLOR_YELLOW  is the value 4
+        #   ev3.ColorSensor.COLOR_RED     is the value 5
+        #   ev3.ColorSensor.COLOR_WHITE   is the value 6
+        #   ev3.ColorSensor.COLOR_BROWN   is the value 7
+        # From http://python-ev3dev.readthedocs.io/en/latest/sensors.html#special-sensor-classes
+
+        for _ in range(5):
+            current_color = self.color_sensor.color
+            if current_color == ev3.ColorSensor.COLOR_RED:
+                ev3.Sound.speak("I see Red").wait()
+            else:
+                print('no red')
+            time.sleep(2.0)
+
+    def testing(self):
+        pixy = ev3.Sensor(driver_name="pixy-lego")
+        # pixy.mode = "SIG1"
+        while True:
+            print("(X, Y)=({}, {}) Width={} Height={}".format(
+                pixy.value(1), pixy.value(2), pixy.value(3),
+                pixy.value(4)))
+            time.sleep(0.5)
+
 

@@ -28,7 +28,6 @@ def main():
 
     forward_button = ttk.Button(main_frame, text="Walk")
     forward_button.grid(row=2, column=1)
-    # forward_button and '<Up>' key is done for your here...
     forward_button['command'] = lambda: send_walk(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<w>', lambda event: send_walk(mqtt_client, left_speed_entry, right_speed_entry))
 
@@ -38,7 +37,7 @@ def main():
     root.bind('<space>', lambda event: stay(mqtt_client))
 
     wag_button = ttk.Button(main_frame, text='Wag Tail!')
-    wag_button.grid(row=4, column=0)
+    wag_button.grid(row=6, column=0)
     wag_button['command'] = lambda: wag_tail(mqtt_client)
     root.bind('<e>', lambda event: wag_tail(mqtt_client))
 
@@ -56,6 +55,16 @@ def main():
     bark_button.grid(row=4, column=0)
     bark_button['command'] = lambda: bark(mqtt_client)
     root.bind('<e>', lambda event: bark(mqtt_client))
+
+    test_button = ttk.Button(main_frame, text='cam')
+    test_button.grid(row=4, column=1)
+    test_button['command'] = lambda: testing(mqtt_client)
+    root.bind('<e>', lambda event: testing(mqtt_client))
+
+    colors_button = ttk.Button(main_frame, text='colors')
+    colors_button.grid(row=6, column=1)
+    colors_button['command'] = lambda: color_sensor_color(mqtt_client)
+    root.bind('<e>', lambda event: color_sensor_color(mqtt_client))
 
     root.mainloop()
 
@@ -94,6 +103,14 @@ def nap_time(mqtt_client):
     mqtt_client.send_message('nap_time')
     mqtt_client.close()
     exit()
+
+def testing(mqtt_client):
+    print('testing')
+    mqtt_client.send_message('testing')
+
+def color_sensor_color(mqtt_client):
+    print('colors')
+    mqtt_client.send_message('color_sensor_color')
 
 
 main()
