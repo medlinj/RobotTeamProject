@@ -74,6 +74,10 @@ def main():
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
+    purp_button = ttk.Button(main_frame, text='Find Purpose')
+    purp_button.grid(row=6,column=1)
+    purp_button['command']=(lambda:find_purpose(mqtt_client, True))
+
     root.mainloop()
 
 
@@ -132,9 +136,14 @@ def quit_program(mqtt_client, shutdown_ev3):
     mqtt_client.close()
     exit()
 
+def find_purpose(mqtt_client, find_purpose):
+    if find_purpose:
+        print('find purpose')
+        mqtt_client.send_message('hi')
 
 
 
+main()
 
 
 
