@@ -1,10 +1,25 @@
 import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
+import time as time
+class Recie(object):
+    def __init__(self):
+       pass
+
+    def rec(self):
+        print('but he was not  ok, for you see, on his search for purpose, it found out that it was, in fact, a robot, and was forced to confront the fact that everything, even its existential crisis, was preprogrammed')
+
+    def loop_forever(self):
+        while True:
+            time.sleep(.05)
+
+
 
 def main():
-    mqtt_client = com.MqttClient()
+    thing = Recie()
+    mqtt_client = com.MqttClient(thing)
     mqtt_client.connect_to_ev3()
+
 
 
     root = tkinter.Tk()
@@ -138,12 +153,12 @@ def quit_program(mqtt_client, shutdown_ev3):
 
 def find_purpose(mqtt_client, find_purpose):
     if find_purpose:
-        print('find purpose')
-        mqtt_client.send_message('hi')
+
+        mqtt_client.send_message('find_purpose')
+
+
 
 
 
 main()
-
-
 
