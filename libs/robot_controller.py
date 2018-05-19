@@ -30,8 +30,10 @@ class Snatch3r(object):
         assert self.left_motor.connected
         assert self.right_motor.connected
 
-        self.going_to_location = 'none'
-        self.last_location = 'none'
+        self.pixy = ev3.Sensor(driver_name="pixy_lego")
+
+        self.current_color = 'none'
+        self.last_color = 'none'
 
         self.is_going = True
 
@@ -140,6 +142,49 @@ class Snatch3r(object):
         self.spin_right(90, speed=300, stop_action='brake')
         self.forward(10, speed=300, stop_action='brake')
         self.spin_left(90, speed=300,stop_action='brake')
+
+
+    def set_curr_color(self):
+        # runs a loop that will change the signature and determine which one the sensor is currently seeing
+        # This will also set the last color if it has changed
+        # TODO: Figure out acceptable area
+        area = 10
+
+        # Check for green
+        self.pixy.mode = "SIG1"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'green'
+            return
+
+        # Check for blue
+        self.pixy.mode = "SIG2"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'blue'
+            return
+        # Check for red
+        self.pixy.mode = "SIG3"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'red'
+            return
+        # Check for orange
+        self.pixy.mode = "SIG4"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'orange'
+            return
+
+
+    def color_tester(self):
+        # Tests the color detection
+        self.set_curr_color()
+        print('Current Color: ', self.current_color, ' Previous color: ', self.last_color)
+        time.sleep(3)
+
+
+
 
 
 

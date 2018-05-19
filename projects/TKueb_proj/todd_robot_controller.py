@@ -52,7 +52,6 @@ class Snatch3r(object):
         self.right_motor.run_to_rel_pos(position_sp=degrees_motor, speed_sp=-8 * speed, stop_action=stop_action)
         self.left_motor.wait_while("running")
         self.right_motor.wait_while("running")
-
     def turn_left(self, degrees, speed, stop_action='brake'):
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         right_motor.run_to_rel_pos(speed_sp=speed * 8, position_sp=degrees * 13)
