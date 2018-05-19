@@ -12,6 +12,7 @@ class RobotDelegate(object):
         self.lights = ev3.Leds
         assert self.left_paw.connected
         assert self.right_paw.connected
+        self.mqtt = None
 
     def bark(self):
         ev3.Sound.speak('bark, bark, woof, woof').wait()
@@ -72,6 +73,13 @@ class RobotDelegate(object):
         while True:
             current_color = self.color_sensor.color
             if current_color == 1:
+                self.mqtt.send_message('black')
+                break
+            if current_color == 5:
+                self.mqtt.send_message('red')
+                break
+            if current_color == 2:
+                self.mqtt.send_message('blue')
                 break
             else:
                 print('no smell')
@@ -79,6 +87,7 @@ class RobotDelegate(object):
         self.stay()
         time.sleep(0.5)
         self.wag_tail()
+
 
     def pet_parade(self):
         list1 = [ev3.Leds.GREEN, ev3.Leds.RED, ev3.Leds.YELLOW, ev3.Leds.GREEN, ev3.Leds.AMBER, ev3.Leds.BLACK, ev3.Leds.ORANGE]
