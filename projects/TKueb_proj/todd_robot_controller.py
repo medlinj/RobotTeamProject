@@ -30,10 +30,17 @@ class Snatch3r(object):
         assert self.left_motor.connected
         assert self.right_motor.connected
 
-        self.going_to_location = 'none'
-        self.last_location = 'none'
+        self.pixy = ev3.Sensor(driver_name="pixy_lego")
+
+        self.soda_type = 'none'
+
+        self.has_soda = False
+
+        self.current_color = 'none'
+        self.last_color = 'none'
 
         self.is_going = True
+        self.is_coming = False
 
     def forward(self, inches, speed=100, stop_action='brake'):
         k = 360 / 4.2
@@ -139,6 +146,100 @@ class Snatch3r(object):
         self.spin_right(90, speed=300, stop_action='brake')
         self.forward(10, speed=300, stop_action='brake')
         self.spin_left(90, speed=300, stop_action='brake')
+
+    def set_curr_color(self):
+        # runs a loop that will change the signature and determine which one the sensor is currently seeing
+        # This will also set the last color if it has changed
+        # TODO: Figure out acceptable area
+        area = 10
+
+        # Check for green
+        self.pixy.mode = "SIG1"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'green'
+            return
+
+        # Check for blue
+        self.pixy.mode = "SIG2"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'blue'
+            return
+        # Check for red
+        self.pixy.mode = "SIG3"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'red'
+            return
+        # Check for orange
+        self.pixy.mode = "SIG4"
+        if self.pixy.value(3) * self.pixy.value(4) > area:
+            self.last_color = self.current_color
+            self.current_color = 'orange'
+            return
+
+    def color_tester(self):
+        # Tests the color detection
+        self.set_curr_color()
+        print('Current Color: ', self.current_color, ' Previous color: ', self.last_color)
+        time.sleep(3)
+
+    def soda_request(self, soda_input_pc):
+        self.soda_type = soda_input_pc
+
+    def vending(self):
+        self.spin_left(90, speed=100, stop_action='brake')
+        self.forward(72, speed=400, stop_action='brake')
+        #TODO set correct distance
+
+        ev3.Sound.speak("Excuse me")
+        time.sleep(2)
+        ev3.Sound.speak("I am down here, the robot")
+        time.sleep(3)
+        ev3.Sound.speak("Do you mind buying me a", self.soda_type,)
+        time.sleep(2)
+        ev3.Sound.speak("Please put soda in my gripper")
+
+
+        dist_sensor = ev3.InfraredSensor
+        dist = dist_sensor.proximity
+
+        # Waits until soda is placed within 4 cm of the gripper
+        while True:
+            if dist < 4:
+                break
+
+        self.has_soda = True
+        self.is_going = False
+        self.is_coming = True
+
+        ev3.Sound.speak("Thank you very much human")
+        self.arm_up()
+
+        # Set to coast, due to fear of angular momentum possibly tipping the robot if it were to brake
+        self.spin_right(180, speed='200', stop_action='coast')
+        self.forward(72, speed=400, stop_action='coast')
+        self.spin_right(90, speed=200, stop_action='coast')
+
+
+    # DONE: Create a vending machine script for when red is reached
+
+
+    def start_fetch_loop(self):
+        # function that will drive the bot
+
+        self.color_tester()
+
+        if self.current_color is 'green':
+            self.spin_left(90, speed=100, stop_action='brake')
+
+        if self.current_color is 'blue':
+            #TODO: create and add a "drive to" function
+
+        if self.current_color is 'red':
+            #TODO: create and add a "drive to" function that will take it to the vending machine
+
 
 
 

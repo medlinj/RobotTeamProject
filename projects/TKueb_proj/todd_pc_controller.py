@@ -60,6 +60,10 @@ def main():
     soda_entry.insert(0, "")
     soda_entry.grid(row=1, column=3)
 
+    soda_set = ttk.Button(main_frame, text="Set soda")
+    soda_set.grid(row=1, column=4)
+    # TODO add button callback
+
     status_label = ttk.Label(main_frame, text="Current Status: ")
     status_label.grid(row=2, column=2)
 
