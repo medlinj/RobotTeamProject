@@ -14,7 +14,6 @@
 import ev3dev.ev3 as ev3
 import math
 import time
-import mqtt_remote_method_calls as com
 
 
 class Snatch3r(object):
@@ -44,6 +43,8 @@ class Snatch3r(object):
 
         self.current_color = 'none'
         self.last_color = 'none'
+
+        self.status = 'Connection to robot is established'
 
         self.is_going = True
         self.is_coming = False
@@ -153,6 +154,8 @@ class Snatch3r(object):
         self.forward(18, speed=60, stop_action='brake')
         self.spin_left(90, speed=60, stop_action='brake')
 
+    def change_status(self, mqtt_client, status_to_send):
+        mqtt_client.send_message("change_status", [status_to_send])
 
     def x_pos(self):
         self.set_curr_color()
@@ -359,8 +362,10 @@ class Snatch3r(object):
     # DONE: Create a vending machine script for when red is reached
 
 
-    def start_fetch_loop(self):
+    def start_fetch(self):
         # function that will drive the bot
+
+
 
         while self.current_color is not 'green':
             self.set_curr_color()

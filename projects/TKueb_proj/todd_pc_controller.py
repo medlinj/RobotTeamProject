@@ -8,11 +8,11 @@ import mqtt_remote_method_calls as com
 class PcAction(object):
 
     def __init__(self):
-        self.status = 'No status / Waiting response from robot'
+        self.status_label = 'Waiting on response from robot. No connection made.'
 
-    def set_status(self, input_status):
-        # Creates function MQTT will call to change the PcAction object's status variable
-        self.status = input_status
+    def change_status(self, status):
+        message_to_display = status
+        self.status_label.configure(text=message_to_display)
 
 
 def main():
@@ -62,7 +62,9 @@ def main():
 
     soda_set = ttk.Button(main_frame, text="Set soda")
     soda_set.grid(row=1, column=4)
-    # TODO add button callback
+    soda_set['command'] = lambda: send_soda(mqtt_client, soda_entry.get())
+
+    # DONE add button callback
 
     status_label = ttk.Label(main_frame, text="Current Status: ")
     status_label.grid(row=2, column=2)
@@ -86,21 +88,40 @@ def main():
 
     #Creating variable status label TODO: FIGURE OUT HOW TO CHANGE LABEL
     pc_action_obj = PcAction()
-    label_text = pc_action_obj.status
+    label_text = pc_action_obj.status_label
     display_status = ttk.Label(main_frame, text = label_text)
     display_status.grid(row=2, column=3)
 
     #Start stop buttons
     start_button = ttk.Button(main_frame, text="Start")
     start_button.grid(row=6, column=1)
+    start_button['command'] = lambda: start(mqtt_client)
     # TODO: add the button callback
 
     quit_button = ttk.Button(main_frame, text="Quit")
     quit_button.grid(row=6, column=2)
-    # TODO: add the button callback
+    quit_button['command'] = lambda: quit(mqtt_client, True)
+    # DONE: add the button callback
 
     window.mainloop()
 
-    # TODO: start and stop callback function
+    # DONE: start and stop callback function
+
+def send_soda(mqtt_client, soda_type):
+    mqtt_client.send_message("soda_request", [soda_type])
+
+def start(mqtt_client):
+    mqtt_client.send_message("start_fetch")
+
+def quit(mqtt_client, shutdown_ev3):
+    if shutdown_ev3:
+        print("shutdown")
+        mqtt_client.send_message("shutdown")
+    mqtt_client.close()
+    exit()
+
+
+
+
 
 main()

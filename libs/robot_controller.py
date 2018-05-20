@@ -126,6 +126,8 @@ class Snatch3r(object):
         self.right_motor.stop(stop_action='brake')
         self.arm.stop(stop_action='brake')
 
+
+
     def changing_direction(self):
         if self.is_going is True:
             self.is_going = False
