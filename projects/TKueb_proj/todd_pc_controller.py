@@ -3,29 +3,19 @@
 import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
-
-
-class PcAction(object):
-
-    def __init__(self):
-        self.status_label = 'Waiting on response from robot. No connection made.'
-
-    def change_status(self, status):
-        message_to_display = status
-        self.status_label.configure(text=message_to_display)
+import pc_delegate_helper
 
 
 def main():
-    pc = PcAction
-    mqtt_client = com.MqttClient(pc)
-    mqtt_client.connect_to_pc()
-
-
-
-
+    pc = pc_delegate_helper.PcAction()
+    pc_delegate = com.MqttClient(pc)
+    pc_delegate.connect_to_pc()
+    # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
+    #pc.loop_forever()  # Calls a function that has a while True: loop within it to avoid letting the program end.
     #creating mqtt object adn connecting the object to ev3
-    mqtt_client = com.MqttClient()
-    mqtt_client.connect_to_ev3()
+
+    mqtt_to_ev3 = com.MqttClient()
+    mqtt_to_ev3.connect_to_ev3()
 
     #Creating the window
     window = tkinter.Tk()
@@ -62,7 +52,7 @@ def main():
 
     soda_set = ttk.Button(main_frame, text="Set soda")
     soda_set.grid(row=1, column=4)
-    soda_set['command'] = lambda: send_soda(mqtt_client, soda_entry.get())
+    soda_set['command'] = lambda: send_soda(mqtt_to_ev3, soda_entry.get())
 
     # DONE add button callback
 
@@ -87,37 +77,39 @@ def main():
     orange_entry.grid(row=4,column=1)
 
     #Creating variable status label TODO: FIGURE OUT HOW TO CHANGE LABEL
-    pc_action_obj = PcAction()
-    label_text = pc_action_obj.status_label
+
+    label_text = pc.status_code
     display_status = ttk.Label(main_frame, text = label_text)
     display_status.grid(row=2, column=3)
 
     #Start stop buttons
     start_button = ttk.Button(main_frame, text="Start")
     start_button.grid(row=6, column=1)
-    start_button['command'] = lambda: start(mqtt_client)
+    start_button['command'] = lambda: start(mqtt_to_ev3)
     # TODO: add the button callback
 
     quit_button = ttk.Button(main_frame, text="Quit")
     quit_button.grid(row=6, column=2)
-    quit_button['command'] = lambda: quit(mqtt_client, True)
+    quit_button['command'] = lambda: quit(mqtt_to_ev3, True)
     # DONE: add the button callback
 
     window.mainloop()
+    pc_action_obj.loop_forever()
+
 
     # DONE: start and stop callback function
 
-def send_soda(mqtt_client, soda_type):
-    mqtt_client.send_message("soda_request", [soda_type])
+def send_soda(which_mqtt, soda_type):
+    which_mqtt.send_message("soda_request", [soda_type])
 
-def start(mqtt_client):
-    mqtt_client.send_message("start_fetch")
+def start(which_mqtt):
+    which_mqtt.send_message("start_fetch")
 
-def quit(mqtt_client, shutdown_ev3):
+def quit(which_mqtt, shutdown_ev3):
     if shutdown_ev3:
         print("shutdown")
-        mqtt_client.send_message("shutdown")
-    mqtt_client.close()
+        which_mqtt.send_message("shutdown")
+    which_mqtt.close()
     exit()
 
 

@@ -16,6 +16,7 @@ import math
 import time
 
 
+
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
 
@@ -154,8 +155,8 @@ class Snatch3r(object):
         self.forward(18, speed=60, stop_action='brake')
         self.spin_left(90, speed=60, stop_action='brake')
 
-    def change_status(self, mqtt_client, status_to_send):
-        mqtt_client.send_message("change_status", [status_to_send])
+    # def change_status(self, mqtt_client, status_to_send):
+    #     mqtt_client.send_message("change_status", [status_to_send])
 
     def x_pos(self):
         self.set_curr_color()
@@ -365,38 +366,41 @@ class Snatch3r(object):
     def start_fetch(self):
         # function that will drive the bot
 
+        # TODO: Remove the test and change with self.status
 
 
         while self.current_color is not 'green':
             self.set_curr_color()
-            print(self.current_color)
+            print('Waiting for green. CURRENT COLOR:   ', self.current_color)
+            print('Soda that is set currently is:   ', self.soda_type)
         if self.current_color is 'green':
             self.spin_left(90, speed=75, stop_action='brake')
 
         while self.current_color is not 'blue':
             self.set_curr_color()
-            print(self.current_color)
+            print('Waiting for blue. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'blue':
             self.drive_to()
             self.go_around()
 
+
         while self.current_color is not 'red':
             self.set_curr_color()
-            print(self.current_color)
+            print('Waiting for red. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'red':
             self.drive_to()
             self.vending()
 
         while self.current_color is not 'blue':
             self.set_curr_color()
-            print(self.current_color)
+            print('Waiting for blue. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'blue':
             self.drive_to()
             self.go_around()
 
         while self.current_color is not 'orange':
             self.set_curr_color()
-            print(self.current_color)
+            print('Waiting for orange. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'orange':
             self.drive_to()
             self.spin_right(90, speed=50, stop_action='brake')
