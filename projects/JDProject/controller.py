@@ -12,6 +12,7 @@ class RobotDelegate(object):
         self.lights = ev3.Leds
         assert self.left_paw.connected
         assert self.right_paw.connected
+        self.mqtt = None
 
     def bark(self):
         ev3.Sound.speak('bark, bark, woof, woof').wait()
@@ -28,7 +29,7 @@ class RobotDelegate(object):
         ev3.Sound.beep().wait()
 
     def head_down(self):
-        self.head.run_to_rel_pos(position_sp=-14.2*180)
+        self.head.run_to_rel_pos(position_sp=-14.2*180+30)
         self.head.wait_while(ev3.Motor.STATE_RUNNING)
 
     def shake(self):
@@ -67,12 +68,34 @@ class RobotDelegate(object):
         self.right_paw.stop()
         self.running = False
 
-    # def sniff(self):
-    #     self.color_sensor
+    def sniff(self):
+        self.walk(400, 400)
+        while True:
+            current_color = self.color_sensor.color
+            if current_color == 1:
+                self.mqtt.send_message('black')
+                break
+            if current_color == 5:
+                self.mqtt.send_message('red')
+                break
+            if current_color == 2:
+                self.mqtt.send_message('blue')
+                break
+            else:
+                print('no smell')
+            time.sleep(0.5)
+        self.stay()
+        time.sleep(0.5)
+        self.wag_tail()
 
-    # def pet_parade(self):
-    #     self.lights.RIGHT()
-    #     self.lights.set_color(self.lights.LEFT, list1)
+
+    def pet_parade(self):
+        list1 = [ev3.Leds.GREEN, ev3.Leds.RED, ev3.Leds.YELLOW, ev3.Leds.GREEN, ev3.Leds.AMBER, ev3.Leds.BLACK, ev3.Leds.ORANGE]
+        for j in range(4):
+            for k in range(len(list1)):
+                ev3.Leds.set_color(ev3.Leds.LEFT, list1[k])
+                ev3.Leds.set_color(ev3.Leds.RIGHT, list1[k])
+                time.sleep(0.4)
 
     def loop_forever(self):
         self.running = True
@@ -105,13 +128,13 @@ class RobotDelegate(object):
         #   ev3.ColorSensor.COLOR_BROWN   is the value 7
         # From http://python-ev3dev.readthedocs.io/en/latest/sensors.html#special-sensor-classes
 
-        for _ in range(5):
+        for _ in range(20):
             current_color = self.color_sensor.color
-            if current_color == ev3.ColorSensor.COLOR_RED:
+            if current_color == 5:
                 ev3.Sound.speak("I see Red").wait()
             else:
                 print('no red')
-            time.sleep(2.0)
+            time.sleep(1.0)
 
     def testing(self):
         pixy = ev3.Sensor(driver_name="pixy-lego")
@@ -120,6 +143,12 @@ class RobotDelegate(object):
             print("(X, Y)=({}, {}) Width={} Height={}".format(
                 pixy.value(1), pixy.value(2), pixy.value(3),
                 pixy.value(4)))
-            time.sleep(0.5)
+            time.sleep(1.0)
+            if pixy.value(2) <= 100:
+                self.left_paw.run_to_rel_pos(position_sp=90, speed_sp=200)
+                time.sleep(1)
+            if pixy.value(2) >= 150:
+                self.right_paw.run_to_rel_pos(position_sp=90, speed=200)
+                time.sleep(1)
 
 
