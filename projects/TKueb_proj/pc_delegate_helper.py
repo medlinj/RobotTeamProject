@@ -2,7 +2,7 @@ import time
 class PcAction(object):
 
     def __init__(self):
-        self.status_code = int(-1)
+        self.status_code = int(2)
 
     def change_status_code(self, incoming_status):
         self.status_code = int(incoming_status)

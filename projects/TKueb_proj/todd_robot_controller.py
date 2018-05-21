@@ -113,7 +113,7 @@ class Snatch3r(object):
             time.sleep(0.1)
 
     def shutdown(self):
-        quit()
+        exit()
         self.arm.stop()
         self.left_motor.stop()
         self.right_motor.stop()
@@ -264,7 +264,7 @@ class Snatch3r(object):
 
         # area = 20
         # pixy = ev3.Sensor(driver_name="pixy-lego")
-        #
+        #        while True:
         # # Check for green
         # pixy.mode = "SIG1"
         # if pixy.value(3) * pixy.value(4) > area:
@@ -331,6 +331,7 @@ class Snatch3r(object):
         ev3.Sound.speak("I am down here, the robot")
         time.sleep(3)
         ev3.Sound.speak("Do you mind buying me a")
+        time.sleep(4)
         ev3.Sound.speak("", str(self.soda_type))
         time.sleep(2)
         ev3.Sound.speak("Please put soda in my gripper")
@@ -351,14 +352,15 @@ class Snatch3r(object):
         self.is_going = False
         self.is_coming = True
 
-        ev3.Sound.speak("Thank you very much human, please press enter button to send me back")
+        ev3.Sound.speak("Thank you very much human, please press my touch sensor to send me back")
 
-        enter_button = ev3.Button()
+        touch_sensor = ev3.TouchSensor()
         while True:
-            if enter_button.enter:
+            if touch_sensor.is_pressed:
                 break
 
 
+        time.sleep(2)
         self.arm_up()
 
         # Set to coast, due to fear of angular momentum possibly tipping the robot if it were to brake
@@ -381,11 +383,11 @@ class Snatch3r(object):
         in_robot_controller.send_message("change_status_code", [0])
         # TODO: Remove the test and change with self.status
 
-        while self.current_color is not 'green':
+        while self.current_color is not 'orange':
             self.set_curr_color()
             print('Waiting for green. CURRENT COLOR:   ', self.current_color)
             print('Soda that is set currently is:   ', self.soda_type)
-        if self.current_color is 'green':
+        if self.current_color is 'orange':
             self.forward(25, speed=75, stop_action='brake')
             self.spin_left(90, speed=75, stop_action='brake')
 
@@ -411,10 +413,10 @@ class Snatch3r(object):
             self.drive_to()
             self.go_around()
 
-        while self.current_color is not 'green':
+        while self.current_color is not 'orange':
             self.set_curr_color()
             print('Waiting for orange. CURRENT COLOR:   ', self.current_color)
-        if self.current_color is 'green':
+        if self.current_color is 'orange':
             self.drive_to()
             self.spin_right(90, speed=50, stop_action='brake')
 
@@ -439,7 +441,7 @@ class Snatch3r(object):
                 break
 
             self.trace()
-            self.forward(10, speed=70, stop_action='coast')
+            self.forward(7, speed=70, stop_action='coast')
 
 
 

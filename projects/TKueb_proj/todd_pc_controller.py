@@ -66,7 +66,7 @@ def main():
 
     label_text = pc.get_status_code()
     display_status = ttk.Label(main_frame, text='default')
-    display_status['text'] = status_decoder(label_text)
+    display_status['text'] = label_text
     display_status.grid(row=2, column=3)
 
 
