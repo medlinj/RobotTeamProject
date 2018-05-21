@@ -8,6 +8,9 @@ class PcAction(object):
         self.status_code = int(incoming_status)
         print(self.status_code)
 
+    def get_status_code(self):
+        return self.status_code
+
     def loop_forever(self):
         self.running = True
         while self.running:

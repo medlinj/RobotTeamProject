@@ -9,13 +9,16 @@ import pc_delegate_helper
 def main():
     pc = pc_delegate_helper.PcAction()
     pc_delegate = com.MqttClient(pc)
-    pc_delegate.connect_to_pc()
+
+    #TODO: Change back to pc?
+    pc_delegate.connect_to_ev3()
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
     #pc.loop_forever()  # Calls a function that has a while True: loop within it to avoid letting the program end.
     #creating mqtt object adn connecting the object to ev3
 
     mqtt_to_ev3 = com.MqttClient()
     mqtt_to_ev3.connect_to_ev3()
+
 
     #Creating the window
     window = tkinter.Tk()
@@ -59,6 +62,14 @@ def main():
     status_label = ttk.Label(main_frame, text="Current Status: ")
     status_label.grid(row=2, column=2)
 
+    # Creating variable status label TODO: FIGURE OUT HOW TO CHANGE LABEL
+
+    label_text = pc.get_status_code()
+    display_status = ttk.Label(main_frame, text='default')
+    display_status['text'] = status_decoder(label_text)
+    display_status.grid(row=2, column=3)
+
+
     #creating entry boxes
     green_entry = ttk.Entry(main_frame, width=16)
     green_entry.insert(0, "")
@@ -76,11 +87,7 @@ def main():
     orange_entry.insert(0, "")
     orange_entry.grid(row=4,column=1)
 
-    #Creating variable status label TODO: FIGURE OUT HOW TO CHANGE LABEL
 
-    label_text = pc.status_code
-    display_status = ttk.Label(main_frame, text = label_text)
-    display_status.grid(row=2, column=3)
 
     #Start stop buttons
     start_button = ttk.Button(main_frame, text="Start")
@@ -93,8 +100,17 @@ def main():
     quit_button['command'] = lambda: quit(mqtt_to_ev3, True)
     # DONE: add the button callback
 
+    arm_down_button = ttk.Button(main_frame, text="Arm down")
+    arm_down_button.grid(row=6, column=3)
+    arm_down_button['command'] = lambda: arm_down(mqtt_to_ev3)
+
+    arm_up_button = ttk.Button(main_frame, text="Arm up")
+    arm_up_button.grid(row=6, column=4)
+    arm_up_button['command'] = lambda: arm_up(mqtt_to_ev3)
+
+
     window.mainloop()
-    pc_action_obj.loop_forever()
+    pc.loop_forever()
 
 
     # DONE: start and stop callback function
@@ -111,6 +127,46 @@ def quit(which_mqtt, shutdown_ev3):
         which_mqtt.send_message("shutdown")
     which_mqtt.close()
     exit()
+
+def arm_down(which_mqtt):
+    print("arm down")
+    which_mqtt.send_message("arm_down")
+
+def arm_up(which_mqtt):
+    print("arm up")
+    which_mqtt.send_message("arm_up")
+
+def status_decoder(status_int):
+
+    if status_int is -1:
+        return str("error")
+
+    if status_int is 0:
+        return str("Waiting to start. Push start button")
+
+    if status_int is 1:
+        return str(main.green_entry.get())
+
+    if status_int is 2:
+        return str(main.blue_entry.get())
+
+    if status_int is 3:
+        return str(main.red_entry.get())
+
+    if status_int is 4:
+        return str("Going to vending machine")
+
+    if status_int is 5:
+        return str("Soda received")
+
+    if status_int is 6:
+        return str(main.blue_entry.get())
+
+    if status_int is 7:
+        return str(main.orange_entry.get())
+
+    if status_int is 8:
+        return str("Your soda has been delivered. Enjoy!")
 
 
 

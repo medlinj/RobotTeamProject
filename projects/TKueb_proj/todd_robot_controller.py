@@ -14,7 +14,7 @@
 import ev3dev.ev3 as ev3
 import math
 import time
-
+import mqtt_remote_method_calls as com
 
 
 class Snatch3r(object):
@@ -113,10 +113,12 @@ class Snatch3r(object):
             time.sleep(0.1)
 
     def shutdown(self):
+        quit()
         self.arm.stop()
         self.left_motor.stop()
         self.right_motor.stop()
         self.running = False
+
 
     def move(self, left_motor_speed, right_motor_speed):
         self.left_motor.run_forever(speed_sp=left_motor_speed)
@@ -150,7 +152,7 @@ class Snatch3r(object):
         self.spin_left(90, speed=60, stop_action='brake')
         self.forward(18, speed=60, stop_action='brake')
         self.spin_right(90, speed=60, stop_action='brake')
-        self.forward(40, speed=60, stop_action='brake')
+        self.forward(20, speed=60, stop_action='brake')
         self.spin_right(90, speed=60, stop_action='brake')
         self.forward(18, speed=60, stop_action='brake')
         self.spin_left(90, speed=60, stop_action='brake')
@@ -318,7 +320,7 @@ class Snatch3r(object):
     def vending(self):
         # TODO: Change back speed argument
         self.spin_left(90, speed=100, stop_action='brake')
-        self.forward(72, speed=100, stop_action='brake')
+        self.forward(35, speed=100, stop_action='brake')
         #TODO set correct distance
 
         # DONE REMOVE ARM DOWN
@@ -328,7 +330,8 @@ class Snatch3r(object):
         time.sleep(2)
         ev3.Sound.speak("I am down here, the robot")
         time.sleep(3)
-        ev3.Sound.speak("Do you mind buying me a", str(self.soda_type))
+        ev3.Sound.speak("Do you mind buying me a")
+        ev3.Sound.speak("", str(self.soda_type))
         time.sleep(2)
         ev3.Sound.speak("Please put soda in my gripper")
 
@@ -348,12 +351,19 @@ class Snatch3r(object):
         self.is_going = False
         self.is_coming = True
 
-        ev3.Sound.speak("Thank you very much human")
+        ev3.Sound.speak("Thank you very much human, please press enter button to send me back")
+
+        enter_button = ev3.Button()
+        while True:
+            if enter_button.enter:
+                break
+
+
         self.arm_up()
 
         # Set to coast, due to fear of angular momentum possibly tipping the robot if it were to brake
         self.spin_right(180, speed=100, stop_action='coast')
-        self.forward(72, speed=100, stop_action='coast')
+        self.forward(35, speed=100, stop_action='coast')
         self.spin_right(90, speed=100, stop_action='coast')
 
         #DONE REMOVE THE ARM DOWN!!!
@@ -365,15 +375,18 @@ class Snatch3r(object):
 
     def start_fetch(self):
         # function that will drive the bot
+        in_robot_controller = com.MqttClient()
+        in_robot_controller.connect_to_pc()
 
+        in_robot_controller.send_message("change_status_code", [0])
         # TODO: Remove the test and change with self.status
-
 
         while self.current_color is not 'green':
             self.set_curr_color()
             print('Waiting for green. CURRENT COLOR:   ', self.current_color)
             print('Soda that is set currently is:   ', self.soda_type)
         if self.current_color is 'green':
+            self.forward(25, speed=75, stop_action='brake')
             self.spin_left(90, speed=75, stop_action='brake')
 
         while self.current_color is not 'blue':
@@ -398,10 +411,10 @@ class Snatch3r(object):
             self.drive_to()
             self.go_around()
 
-        while self.current_color is not 'orange':
+        while self.current_color is not 'green':
             self.set_curr_color()
             print('Waiting for orange. CURRENT COLOR:   ', self.current_color)
-        if self.current_color is 'orange':
+        if self.current_color is 'green':
             self.drive_to()
             self.spin_right(90, speed=50, stop_action='brake')
 
