@@ -127,9 +127,11 @@ class Exist(object):
 
     def find_purpose(self):
         ev3.Sound.speak('Wow, I have found a purpose  in  life, life rules now')
-        time.sleep(9)
         self.commu(self.mqtt_client)
         time.sleep(9)
+
+
+
         ev3.Sound.speak('please, after realizing that nothing I do matters, I wish to be shut down, press my touch sensor to end my predetermined nightmarish existence')
         time.sleep(9)
 
@@ -182,6 +184,9 @@ def shutdown():
         if touchsensor.is_pressed:
             print('pressed')
             ev3.Sound.speak('Goodbye cruel world!')
+
+            while True:
+                time.sleep(.05)
 
 
 

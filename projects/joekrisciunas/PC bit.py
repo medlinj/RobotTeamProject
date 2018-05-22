@@ -7,7 +7,7 @@ class Recie(object):
        pass
 
     def rec(self):
-        print('but he was not  ok, for you see, on his search for purpose, it found out that it was, in fact, a robot, and was forced to confront the fact that everything, even its existential crisis, was preprogrammed')
+        print('narrator voice: but he was not  ok, for you see, on his search for purpose, it found out that it was, in fact, a robot, and was forced to confront the fact that everything, even its existential crisis, was preprogrammed')
 
     def loop_forever(self):
         while True:
@@ -62,13 +62,13 @@ def main():
     right_button.grid(row=3, column=2)
     right_button['command'] = lambda: send_right(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<d>', lambda event: send_right(mqtt_client, left_speed_entry, right_speed_entry))
-    # right_button and '<Right>' key
+
 
     back_button = ttk.Button(main_frame, text="Back")
     back_button.grid(row=4, column=1)
     back_button['command'] = lambda: send_back(mqtt_client, right_speed_entry, left_speed_entry)
     root.bind('<s>', lambda event: send_back(mqtt_client, left_speed_entry, right_speed_entry))
-    # back_button and '<Down>' key
+
 
     up_button = ttk.Button(main_frame, text="Up")
     up_button.grid(row=5, column=0)
@@ -80,7 +80,7 @@ def main():
     down_button['command'] = lambda: send_down(mqtt_client)
     root.bind('<j>', lambda event: send_down(mqtt_client))
 
-    # Buttons for quit and exit
+
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=5, column=2)
     q_button['command'] = (lambda: quit_program(mqtt_client, False))
