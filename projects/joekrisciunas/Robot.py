@@ -126,12 +126,19 @@ class Exist(object):
         mqtt_client.send_message('rec')
 
     def find_purpose(self):
-        ev3.Sound.speak('Wow, I have found a purpose  in  life, life rules now')
-        time.sleep(9)
         self.commu(self.mqtt_client)
-        time.sleep(9)
+
+        ev3.Sound.speak('Wow, I have found a purpose  in  life, life rules now,just kidding, I have found something horrible out about myself, nothing matters')
+        time.sleep(13)
+        self.thesadtruth()
+
+
+    def thesadtruth(self):
         ev3.Sound.speak('please, after realizing that nothing I do matters, I wish to be shut down, press my touch sensor to end my predetermined nightmarish existence')
         time.sleep(9)
+        self.left_motor = 1
+        self.right_motor = 2
+        self.arm = 3
 
     def loop_forever(self):
         while True:
@@ -147,8 +154,8 @@ def main():
     thing.mqtt_client = mqtt_client
 
 
-    #simple_line_follow()
-    #simple_line_follow2()
+    simple_line_follow()
+    simple_line_follow2()
     shutdown()
 
 
@@ -162,17 +169,17 @@ def simple_line_follow():
             if colorsensor.color == 1:
                 robot.forward(3,50)
                 count = count + 1
-                print(k)
+
             else:
                 robot.turn_left(33,50)
                 robot.forward(2,50)
                 count = count + 1
-                print(k)
+
         if count == 5:
-            ev3.Sound.speak('What am I doing  with my life, I cant even follow a simple line')
+            ev3.Sound.speak('What am I doing  with my life, I cant even follow a simple circle')
             time.sleep(6)
             count = count + 1
-            print('finished')
+
 
 
 def shutdown():
@@ -180,8 +187,13 @@ def shutdown():
 
     while True:
         if touchsensor.is_pressed:
-            print('pressed')
             ev3.Sound.speak('Goodbye cruel world!')
+            time.sleep(900000)
+
+
+
+
+
 
 
 
@@ -197,18 +209,19 @@ def simple_line_follow2():
             if colorsensor.color == 1:
                 robot.forward(3, 50)
                 count = count + 1
-                print(k)
+
             else:
                 robot.turn_left(33, 50)
                 robot.forward(2, 50)
                 count = count + 1
-                print(k)
+
 
         if count == 5:
             ev3.Sound.speak('is this all there is to life, to endlessly follow  this circle extremely poorly! ')
             time.sleep(9)
             ev3.Sound.speak('please remote control me, at least being  instructed  is better than endless loops')
             time.sleep(9)
+            count = count  + 1
 
 
 main()

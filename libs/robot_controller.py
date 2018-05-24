@@ -30,8 +30,10 @@ class Snatch3r(object):
         assert self.left_motor.connected
         assert self.right_motor.connected
 
-        self.going_to_location = 'none'
-        self.last_location = 'none'
+        self.pixy = ev3.Sensor(driver_name="pixy_lego")
+
+        self.current_color = 'none'
+        self.last_color = 'none'
 
         self.is_going = True
 
@@ -124,22 +126,17 @@ class Snatch3r(object):
         self.right_motor.stop(stop_action='brake')
         self.arm.stop(stop_action='brake')
 
+
+
     def changing_direction(self):
         if self.is_going is True:
             self.is_going = False
         else:
             self.is_going = True
 
-    def go_around(self):
 
-        #used to navigate around objects
-        self.spin_left(90, speed=300, stop_action='brake')
-        self.forward(10, speed=300, stop_action='brake')
-        self.spin_right(90, speed=300, stop_action='brake')
-        self.forward(10, speed=300, stop_action='brake')
-        self.spin_right(90, speed=300, stop_action='brake')
-        self.forward(10, speed=300, stop_action='brake')
-        self.spin_left(90, speed=300,stop_action='brake')
+
+
 
 
 
