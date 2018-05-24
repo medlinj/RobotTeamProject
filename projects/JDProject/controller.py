@@ -10,8 +10,8 @@ class RobotDelegate(object):
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
         self.lights = ev3.Leds
-        assert self.left_paw.connected
-        assert self.right_paw.connected
+        # assert self.left_paw.connected
+        # assert self.right_paw.connected
         self.mqtt = None
 
     def bark(self):
