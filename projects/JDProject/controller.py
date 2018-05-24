@@ -10,12 +10,16 @@ class RobotDelegate(object):
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
         self.lights = ev3.Leds
-        assert self.left_paw.connected
-        assert self.right_paw.connected
+        # assert self.left_paw.connected
+        # assert self.right_paw.connected
         self.mqtt = None
 
     def bark(self):
-        ev3.Sound.speak('bark, bark, woof, woof').wait()
+        while True:
+            if self.touch_sensor.is_pressed:
+                ev3.Sound.speak('bark, bark, woof, woof').wait()
+                break
+            time.sleep(.1)
 
     def walk(self, left_paw_speed, right_paw_speed):
         self.left_paw.run_forever(speed_sp=left_paw_speed)
@@ -128,27 +132,5 @@ class RobotDelegate(object):
         #   ev3.ColorSensor.COLOR_BROWN   is the value 7
         # From http://python-ev3dev.readthedocs.io/en/latest/sensors.html#special-sensor-classes
 
-        for _ in range(20):
-            current_color = self.color_sensor.color
-            if current_color == 5:
-                ev3.Sound.speak("I see Red").wait()
-            else:
-                print('no red')
-            time.sleep(1.0)
-
-    def testing(self):
-        pixy = ev3.Sensor(driver_name="pixy-lego")
-        # pixy.mode = "SIG1"
-        while True:
-            print("(X, Y)=({}, {}) Width={} Height={}".format(
-                pixy.value(1), pixy.value(2), pixy.value(3),
-                pixy.value(4)))
-            time.sleep(1.0)
-            if pixy.value(2) <= 100:
-                self.left_paw.run_to_rel_pos(position_sp=90, speed_sp=200)
-                time.sleep(1)
-            if pixy.value(2) >= 150:
-                self.right_paw.run_to_rel_pos(position_sp=90, speed=200)
-                time.sleep(1)
 
 
