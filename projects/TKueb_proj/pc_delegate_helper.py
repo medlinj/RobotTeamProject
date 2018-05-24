@@ -1,3 +1,8 @@
+#Helper class for pc controller
+#Todd Kuebelbeck
+#Rose-Hulman Institute of Technology, CSSE120
+
+
 import time
 
 

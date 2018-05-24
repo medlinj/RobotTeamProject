@@ -11,6 +11,10 @@
   could be called.  That way it's a generic action that could be used in any task.
 """
 
+#Helper class for pc controller
+#Todd Kuebelbeck
+#Rose-Hulman Institute of Technology, CSSE120
+
 import ev3dev.ev3 as ev3
 import math
 import time

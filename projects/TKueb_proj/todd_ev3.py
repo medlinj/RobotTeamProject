@@ -3,6 +3,8 @@ import todd_robot_controller as robo
 
 
 def main():
+
+    #create all mqtt objects
     robot = robo.Snatch3r()
     receiving_delegate = com.MqttClient(robot)
     receiving_delegate.connect_to_pc()

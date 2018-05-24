@@ -1,4 +1,6 @@
-
+#Helper class for pc controller
+#Todd Kuebelbeck
+#Rose-Hulman Institute of Technology, CSSE120
 
 import tkinter
 from tkinter import ttk
@@ -113,7 +115,7 @@ def main():
     pc.loop_forever()
 
 
-    # DONE: start and stop callback function
+    # DONE: start and stop callback functions
 
 def send_soda(which_mqtt, soda_type):
     which_mqtt.send_message("soda_request", [soda_type])

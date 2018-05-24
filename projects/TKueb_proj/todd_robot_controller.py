@@ -11,6 +11,10 @@
   could be called.  That way it's a generic action that could be used in any task.
 """
 
+#Helper class for pc controller
+#Todd Kuebelbeck
+#Rose-Hulman Institute of Technology, CSSE120
+
 import ev3dev.ev3 as ev3
 import math
 import time
@@ -339,7 +343,7 @@ class Snatch3r(object):
         dist_sensor = ev3.InfraredSensor()
 
 
-        # Waits until soda is placed within 4 cm of the gripper
+        # Waits until soda is placed within 4cm of the gripper
         #TODO remove print testing statement
 
         while True:
