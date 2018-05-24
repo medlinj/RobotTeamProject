@@ -63,11 +63,6 @@ def main():
     bark_button['command'] = lambda: bark(mqtt_client)
     root.bind('<e>', lambda event: bark(mqtt_client))
 
-    test_button = ttk.Button(main_frame, text='cam')
-    test_button.grid(row=4, column=1)
-    test_button['command'] = lambda: testing(mqtt_client)
-    root.bind('<t>', lambda event: testing(mqtt_client))
-
     colors_button = ttk.Button(main_frame, text='sniff')
     colors_button.grid(row=6, column=1)
     colors_button['command'] = lambda: sniff(mqtt_client)

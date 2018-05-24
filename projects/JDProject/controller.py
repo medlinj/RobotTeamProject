@@ -16,10 +16,10 @@ class RobotDelegate(object):
 
     def bark(self):
         while True:
-            ev3.Sound.speak('bark, bark, woof, woof').wait()
             if self.touch_sensor.is_pressed:
+                ev3.Sound.speak('bark, bark, woof, woof').wait()
                 break
-            time.sleep(3.0)
+            time.sleep(.1)
 
     def walk(self, left_paw_speed, right_paw_speed):
         self.left_paw.run_forever(speed_sp=left_paw_speed)
