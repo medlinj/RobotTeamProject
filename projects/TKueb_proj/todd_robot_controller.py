@@ -113,11 +113,11 @@ class Snatch3r(object):
             time.sleep(0.1)
 
     def shutdown(self):
-        exit()
         self.arm.stop()
         self.left_motor.stop()
         self.right_motor.stop()
         self.running = False
+        exit()
 
 
     def move(self, left_motor_speed, right_motor_speed):
@@ -320,7 +320,7 @@ class Snatch3r(object):
     def vending(self):
         # TODO: Change back speed argument
         self.spin_left(90, speed=100, stop_action='brake')
-        self.forward(35, speed=100, stop_action='brake')
+        self.forward(15, speed=100, stop_action='brake')
         #TODO set correct distance
 
         # DONE REMOVE ARM DOWN
@@ -338,12 +338,13 @@ class Snatch3r(object):
 
         dist_sensor = ev3.InfraredSensor()
 
+
         # Waits until soda is placed within 4 cm of the gripper
         #TODO remove print testing statement
 
         while True:
             dist = dist_sensor.proximity
-            print(int(dist))
+            print('Distance:  ', int(dist))
             if int(dist) < 2:
                 break
             time.sleep(0.75)
@@ -365,7 +366,7 @@ class Snatch3r(object):
 
         # Set to coast, due to fear of angular momentum possibly tipping the robot if it were to brake
         self.spin_right(180, speed=100, stop_action='coast')
-        self.forward(35, speed=100, stop_action='coast')
+        self.forward(15, speed=100, stop_action='coast')
         self.spin_right(90, speed=100, stop_action='coast')
 
         #DONE REMOVE THE ARM DOWN!!!
@@ -383,11 +384,12 @@ class Snatch3r(object):
         in_robot_controller.send_message("change_status_code", [0])
         # TODO: Remove the test and change with self.status
 
-        while self.current_color is not 'orange':
+        while self.current_color is not 'green':
             self.set_curr_color()
-            print('Waiting for green. CURRENT COLOR:   ', self.current_color)
+            print('Waiting for green. CURRENT:   ', self.current_color)
             print('Soda that is set currently is:   ', self.soda_type)
-        if self.current_color is 'orange':
+        if self.current_color is 'green':
+            in_robot_controller.send_message("change_status_code", [1])
             self.forward(25, speed=75, stop_action='brake')
             self.spin_left(90, speed=75, stop_action='brake')
 
@@ -395,6 +397,7 @@ class Snatch3r(object):
             self.set_curr_color()
             print('Waiting for blue. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'blue':
+            in_robot_controller.send_message("change_status_code", [2])
             self.drive_to()
             self.go_around()
 
@@ -403,13 +406,17 @@ class Snatch3r(object):
             self.set_curr_color()
             print('Waiting for red. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'red':
+            in_robot_controller.send_message("change_status_code", [3])
             self.drive_to()
+            in_robot_controller.send_message("change_status_code", [4])
             self.vending()
+            in_robot_controller.send_message("change_status_code", [5])
 
         while self.current_color is not 'blue':
             self.set_curr_color()
             print('Waiting for blue. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'blue':
+            in_robot_controller.send_message("change_status_code", [2])
             self.drive_to()
             self.go_around()
 
@@ -417,10 +424,12 @@ class Snatch3r(object):
             self.set_curr_color()
             print('Waiting for orange. CURRENT COLOR:   ', self.current_color)
         if self.current_color is 'orange':
+            in_robot_controller.send_message("change_status_code", [6])
             self.drive_to()
             self.spin_right(90, speed=50, stop_action='brake')
 
         self.delivery()
+        in_robot_controller.send_message("change_status_code", [7])
 
 
 

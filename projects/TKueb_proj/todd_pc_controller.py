@@ -160,12 +160,9 @@ def status_decoder(status_int):
         return str("Soda received")
 
     if status_int is 6:
-        return str(main.blue_entry.get())
-
-    if status_int is 7:
         return str(main.orange_entry.get())
 
-    if status_int is 8:
+    if status_int is 7:
         return str("Your soda has been delivered. Enjoy!")
 
 

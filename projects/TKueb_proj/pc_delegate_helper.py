@@ -1,11 +1,13 @@
 import time
+
+
 class PcAction(object):
 
     def __init__(self):
-        self.status_code = int(2)
+        self.status_code = 'error'
 
     def change_status_code(self, incoming_status):
-        self.status_code = int(incoming_status)
+        self.status_code = incoming_status
         print(self.status_code)
 
     def get_status_code(self):
@@ -15,3 +17,4 @@ class PcAction(object):
         self.running = True
         while self.running:
             time.sleep(0.1)
+
